@@ -12,5 +12,5 @@ COPY . .
 # 暴露端口
 EXPOSE 5173
 
-# 运行开发服务器
-CMD ["npm", "run", "dev"]
+# 运行开发服务器（--host 支持外部访问）
+CMD ["npm", "run", "dev", "--", "--host"]
