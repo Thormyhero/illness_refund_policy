@@ -1,0 +1,24 @@
+Dockerfile
+  s_9c6c68a0387bce::t_f9140c1c15894e 1-32
+frontend/src/services/api.js
+  s_9c6c68a0387bce::t_89ad32be959feb 5-6
+backend/app.py
+  s_9c6c68a0387bce::t_a13934ae2af7f9 233-240
+  s_9c6c68a0387bce::t_eb490791479c55 3-4
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.10-trip",
+  "base_commit_sha": "c81b3c803ce6b51d8139f8d011757b14d901595e",
+  "prompts": {},
+  "sessions": {
+    "s_9c6c68a0387bce": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "0f99205a-c0fb-4f86-a92f-a14f03db6247",
+        "model": "global.anthropic.claude-haiku-4-5-20251001-v1:0"
+      },
+      "human_author": "Bella Li （李天馨） <bellali@trip.com>"
+    }
+  }
+}
