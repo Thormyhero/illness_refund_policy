@@ -28,7 +28,7 @@ services:
     ports:
       - "5173:5173"
     environment:
-      - VITE_API_BASE=http://api:8000
+      - VITE_API_BASE=https://illnessrefundpolicy-production.up.railway.app
     depends_on:
       - api
     command: npm run dev -- --host

@@ -1,6 +1,9 @@
 import axios from 'axios'
 
-const API_BASE_URL = '/api'
+// 获取 API 基础地址
+// 开发环境：http://localhost:8000
+// 生产环境（Railway）：https://illnessrefundpolicy-production.up.railway.app
+const API_BASE_URL = import.meta.env.VITE_API_BASE || 'http://localhost:8000'
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
