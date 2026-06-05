@@ -1,5 +1,7 @@
 from fastapi import FastAPI, Depends, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from pathlib import Path
 from sqlalchemy.orm import Session
 from typing import Optional, List
 from datetime import datetime
@@ -226,6 +228,14 @@ def get_stats(db: Session = Depends(get_db)):
 def health_check():
     """健康检查"""
     return {"status": "healthy", "timestamp": datetime.utcnow().isoformat()}
+
+
+# ============== 静态文件服务 ==============
+
+# 挂载前端静态文件
+static_path = Path(__file__).parent.parent / "static"
+if static_path.exists():
+    app.mount("/", StaticFiles(directory=str(static_path), html=True), name="static")
 
 
 if __name__ == "__main__":
