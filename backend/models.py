@@ -12,7 +12,7 @@ class Policy(Base):
     __tablename__ = "policies"
 
     id = Column(Integer, primary_key=True, index=True)
-    airline_code = Column(String(10), index=True, nullable=False)  # 航司代码 (AK/MU/CZ等)
+    airline_code = Column(String(100), index=True, nullable=False)  # 航司代码 (AK/MU/CZ等)
     airline_name = Column(String(100), nullable=False)  # 航司名称
     ticket_desk_type = Column(String(50), default="all", nullable=False)  # 票台类型
 
