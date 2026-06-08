@@ -29,12 +29,12 @@ class Policy(Base):
     # 元数据
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
-    current_version_id = Column(Integer, ForeignKey("versions.id"), nullable=True)
+    current_version_id = Column(Integer, nullable=True)  # 去掉外键，避免循环引用
 
-    # 关系
-    versions = relationship("Version", back_populates="policy", cascade="all, delete-orphan")
-    materials = relationship("Material", back_populates="policy", cascade="all, delete-orphan")
-    audit_logs = relationship("AuditLog", back_populates="policy", cascade="all, delete-orphan")
+    # 关系 - 明确指定 foreign_keys 避免歧义
+    versions = relationship("Version", back_populates="policy", cascade="all, delete-orphan", foreign_keys="Version.policy_id")
+    materials = relationship("Material", back_populates="policy", cascade="all, delete-orphan", foreign_keys="Material.policy_id")
+    audit_logs = relationship("AuditLog", back_populates="policy", cascade="all, delete-orphan", foreign_keys="AuditLog.policy_id")
 
     def to_dict(self):
         return {
