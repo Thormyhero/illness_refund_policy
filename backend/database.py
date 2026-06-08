@@ -39,3 +39,8 @@ def get_db():
         yield db
     finally:
         db.close()
+
+def init_db():
+    """初始化数据库表结构"""
+    from models import Base
+    Base.metadata.create_all(bind=engine)
