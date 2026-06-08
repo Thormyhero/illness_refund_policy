@@ -242,3 +242,48 @@ if __name__ == "__main__":
     import uvicorn
 
     uvicorn.run(app, host="0.0.0.0", port=8000)
+
+# 启动时添加测试数据
+@app.on_event("startup")
+def startup_event():
+    """应用启动时添加初始测试数据"""
+    from database import SessionLocal
+    from models import Policy
+    db = SessionLocal()
+    try:
+        # 检查是否已经有数据
+        existing = db.query(Policy).filter(Policy.airline_code == "FD/XJ/D7/AK/QZ/Z2/KT").first()
+        if not existing:
+            # 删除所有旧数据（可选）
+            db.query(Policy).delete()
+            
+            # 添加亚航集团政策
+            policy = Policy(
+                airline_code="FD/XJ/D7/AK/QZ/Z2/KT",
+                airline_name="亚航集团（Airasia Group）",
+                ticket_desk_type="all",
+                raw_policy="因病退票支持（有条件），因病改期否。旅客本人重大疾病或直系亲属重大疾病可申请。需在航班起飞前提交申请和完整材料。",
+                breakdown_json={
+                    "applicability": {
+                        "refund": "支持（有条件）",
+                        "rebooking": "否"
+                    },
+                    "conditions": {
+                        "self_serious_illness": "可申请",
+                        "relative_serious_illness": "可申请"
+                    },
+                    "time_limits": {
+                        "cancel_seat": True,
+                        "advance_hours": "起飞前",
+                        "material_deadline": "客票有效期内"
+                    },
+                    "refund_rules": "不能全额退款，需收取相应取消费用"
+                }
+            )
+            db.add(policy)
+            db.commit()
+            print("✅ 测试数据已添加")
+    except Exception as e:
+        print(f"❌ 添加测试数据失败: {e}")
+    finally:
+        db.close()
